@@ -95,5 +95,8 @@
 			"revisionTime": "2018-11-15T11:05:04Z"
 		}
 	],
-	"rootPath": "github.com/gmimaki/konkatsu"
+	"rootPath": "github.com/gmimaki/konkatsu",
+    "heroku": {
+        "goVersion": "go1.9"
+    }
 }
