@@ -6,6 +6,7 @@ import (
 //	"github.com/gin-gonic/gin"
 	"github.com/line/line-bot-sdk-go/linebot"
 	"log"
+	"fmt"
 )
 
 /*
@@ -63,18 +64,22 @@ func setupRouter() *gin.Engine {
 */
 
 func main() {
-	//client := &http.Client{}
+	client := &http.Client{}
 	bot, err := linebot.New(
 		os.Getenv("LINE_CHANNEL_SECRET"),
-		os.Getenv("LINE_ACCESS_TOKEN"),/*linebot.WithHTTPClient(client),*/
+		os.Getenv("LINE_ACCESS_TOKEN"),
+		linebot.WithHTTPClient(client),
 	)
 	if (err != nil) {
 		log.Fatal(err)
 	}
 
+	fmt.Println("QAAAAAAAAAAAA")
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
+		fmt.Println(events)
 		if err != nil {
+			fmt.Println(err)
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
 			} else {
