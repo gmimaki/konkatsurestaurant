@@ -3,9 +3,12 @@ package main
 import (
 	"net/http"
 	"os"
-	"github.com/gin-gonic/gin"
+//	"github.com/gin-gonic/gin"
+	"github.com/line/line-bot-sdk-go/linebot"
+	"log"
 )
 
+/*
 var db = make(map[string]string)
 
 func setupRouter() *gin.Engine {
@@ -57,9 +60,43 @@ func setupRouter() *gin.Engine {
 
 	return r
 }
+*/
 
 func main() {
-	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	r.Run(":" + os.Getenv("PORT"))
+	//client := &http.Client{}
+	bot, err := linebot.New(
+		os.Getenv("LINE_CHANNEL_SECRET"),
+		os.Getenv("LINE_ACCESS_TOKEN"),/*linebot.WithHTTPClient(client),*/
+	)
+	if (err != nil) {
+		log.Fatal(err)
+	}
+
+	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
+		events, err := bot.ParseRequest(req)
+		if err != nil {
+			if err == linebot.ErrInvalidSignature {
+				w.WriteHeader(400)
+			} else {
+				w.WriteHeader(500)
+			}
+			return
+		}
+		for _, event := range events {
+			if event.Type == linebot.EventTypeMessage {
+				switch message := event.Message.(type) {
+				case *linebot.TextMessage:
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+						log.Print(err)
+					}
+				}
+			}
+		}
+	})
+
+	if err := http.ListenAndServe(":" + os.Getenv("PORT"), nil); err != nil {
+		log.Fatal(err)
+	}
+	//r := setupRouter()
+	//r.Run(":" + os.Getenv("PORT"))
 }
