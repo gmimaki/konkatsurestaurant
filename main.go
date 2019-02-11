@@ -64,6 +64,7 @@ func setupRouter() *gin.Engine {
 */
 
 func main() {
+	fmt.Println("WHHHHHHHHYYYYYYYY")
 	client := &http.Client{}
 	bot, err := linebot.New(
 		os.Getenv("LINE_CHANNEL_SECRET"),
