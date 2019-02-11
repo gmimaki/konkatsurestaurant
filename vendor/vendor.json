@@ -1,5 +1,8 @@
 {
 	"comment": "",
+	"heroku": {
+		"goVersion": "go1.9"
+	},
 	"ignore": "test",
 	"package": [
 		{
@@ -53,6 +56,12 @@
 			"revisionTime": "2019-02-08T07:56:42Z"
 		},
 		{
+			"checksumSHA1": "PPoXHvdU68KmvUSj/TkEIRdZh60=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "c4086b716a78920587705af23f3f0f40aaec40ed",
+			"revisionTime": "2019-02-05T09:51:07Z"
+		},
+		{
 			"checksumSHA1": "GiVgQkx5acnq+JZtYiuHPlhHoso=",
 			"path": "github.com/mattn/go-isatty",
 			"revision": "3fb116b820352b7f0c281308a4d6250c22d94e27",
@@ -95,8 +104,5 @@
 			"revisionTime": "2018-11-15T11:05:04Z"
 		}
 	],
-	"rootPath": "github.com/gmimaki/konkatsu",
-    "heroku": {
-        "goVersion": "go1.9"
-    }
+	"rootPath": "github.com/gmimaki/konkatsu"
 }
