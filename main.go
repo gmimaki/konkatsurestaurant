@@ -73,8 +73,9 @@ func main() {
 	if (err != nil) {
 		log.Fatal(err)
 	}
+	fmt.Println("this is bot")
+	fmt.Println(bot)
 
-	fmt.Println("QAAAAAAAAAAAA")
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
 		fmt.Println(events)
