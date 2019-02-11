@@ -100,6 +100,12 @@ func main() {
 					}
 				}
 			}
+			if event.Type == linebot.EventTypeFollow {
+				text := "こんにちは、婚活で使えるお店を提案するBotです\n東京都のエリアを入力すると、そのエリアで婚活に使えそうなお店を提案します"
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text)).Do(); err != nil {
+					log.Print(err)
+				}
+			}
 		}
 	})
 
