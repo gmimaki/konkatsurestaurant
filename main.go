@@ -64,7 +64,6 @@ func setupRouter() *gin.Engine {
 */
 
 func main() {
-	fmt.Println("WHHHHHHHHYYYYYYYY")
 	client := &http.Client{}
 	bot, err := linebot.New(
 		os.Getenv("LINE_CHANNEL_SECRET"),
@@ -79,6 +78,8 @@ func main() {
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
 		fmt.Println(events)
+		fmt.Println("this is event")
+		fmt.Println(events)
 		if err != nil {
 			fmt.Println(err)
 			if err == linebot.ErrInvalidSignature {
@@ -88,6 +89,7 @@ func main() {
 			}
 			return
 		}
+		fmt.Println("SUCCESSS")
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
