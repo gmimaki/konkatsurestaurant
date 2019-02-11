@@ -76,7 +76,7 @@ func main() {
 	}
 
 	fmt.Println("QAAAAAAAAAAAA")
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/webhook", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
 		fmt.Println(events)
 		if err != nil {
