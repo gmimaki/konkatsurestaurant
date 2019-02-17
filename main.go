@@ -99,7 +99,7 @@ func main() {
 							fmt.Println(err)
 						}
 						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
-							fmt.Println(srg)
+							fmt.Printf("%#v", srg)
 						})
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
