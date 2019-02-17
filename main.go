@@ -79,8 +79,14 @@ func main() {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
 					inputText := sanitizeInput(message.Text)
-					area_query, _ := GetAreaQuery(inputText)
-					fmt.Println(area_query.area_query)
+					area, _ := GetAreaQuery(inputText)
+					fmt.Println(area.area_query)
+					if len(area.area_query) == 0 {
+
+					} else {
+						qury := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1" + area.area_query
+						fmt.Println(qury)
+					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
 					}
