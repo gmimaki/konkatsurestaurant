@@ -80,7 +80,7 @@ func main() {
 				case *linebot.TextMessage:
 					inputText := sanitizeInput(message.Text)
 					area_query, _ := GetAreaQuery(inputText)
-					fmt.Println(area_query[0])
+					fmt.Println(area_query.area_query)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
 					}
