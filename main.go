@@ -94,10 +94,11 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("B")
-						fmt.Printf("%#v", resp)
+						fmt.Printf("%#v", resp.Body)
 					//	defer resp.Body.Close()
 
 						doc, err := goquery.NewDocumentFromReader(resp.Body)
+						fmt.Printf("%#v", doc)
 						if err != nil {
 							fmt.Println(err)
 						}
