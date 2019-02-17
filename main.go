@@ -105,10 +105,10 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("E")
-						doc.Find(".restaurant__detail").Each(func(_ int, srg *goquery.Selection) {
-							fmt.Println("F")
+						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
+							fmt.Println("E")
 							fmt.Printf("%#v", srg)
-						//	fmt.Println(srg.Text())
+							fmt.Println(srg.Text())
 						})
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
