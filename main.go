@@ -104,8 +104,9 @@ func main() {
 						if err != nil {
 							fmt.Println(err)
 						}
-						doc.Find(".restaurant__name").Each(func(_ int, srg *goquery.Selection) {
-							fmt.Println("E")
+						fmt.Println("E")
+						doc.Find(".search-result__header").Each(func(_ int, srg *goquery.Selection) {
+							fmt.Println("F")
 							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
 						})
