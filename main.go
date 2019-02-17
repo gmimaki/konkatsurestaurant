@@ -85,6 +85,7 @@ func main() {
 					if len(area.area_query) == 0 {
 
 					} else {
+						fmt.Println("A")
 						query := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&" + area.area_query
 						fmt.Println(query)
 
@@ -92,12 +93,15 @@ func main() {
 						if err != nil {
 							fmt.Println(err)
 						}
-						defer resp.Body.Close()
+						fmt.Println("B")
+						fmt.Printf("%#v", resp)
+					//	defer resp.Body.Close()
 
 						doc, err := goquery.NewDocumentFromReader(resp.Body)
 						if err != nil {
 							fmt.Println(err)
 						}
+						fmt.Println("C")
 						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
 							fmt.Printf("%#v", srg)
 						})
