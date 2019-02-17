@@ -95,15 +95,17 @@ func main() {
 						}
 						fmt.Println("B")
 						fmt.Printf("%#v", resp.Body)
+						fmt.Println("C")
 					//	defer resp.Body.Close()
 
 						doc, err := goquery.NewDocumentFromReader(resp.Body)
 						fmt.Printf("%#v", doc)
+						fmt.Println("D")
 						if err != nil {
 							fmt.Println(err)
 						}
-						fmt.Println("C")
 						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
+							fmt.Println("E")
 							fmt.Printf("%#v", srg)
 						})
 					}
