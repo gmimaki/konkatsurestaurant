@@ -105,9 +105,9 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("E")
-						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
+						doc.Find(".restaurant__name").Each(func(_ int, srg *goquery.Selection) {
 							fmt.Println("F")
-							fmt.Printf("%#v", srg)
+						//	fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
 						})
 					}
