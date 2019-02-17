@@ -94,7 +94,7 @@ func main() {
 						}
 						defer resp.Body.Close()
 
-						doc, err := goquery.NewDocumentFormatReader(resp.Body)
+						doc, err := goquery.NewDocumentFromReader(resp.Body)
 						if err != nil {
 							fmt.Println(err)
 						}
