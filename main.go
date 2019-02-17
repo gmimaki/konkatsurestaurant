@@ -9,6 +9,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"strings"
+	"github.com/PuerkitoBio/goquery"
 )
 
 type Area struct {
@@ -84,8 +85,20 @@ func main() {
 					if len(area.area_query) == 0 {
 
 					} else {
-						qury := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&" + area.area_query
-						fmt.Println(qury)
+						query := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&" + area.area_query
+						fmt.Println(query)
+
+						resp, err := http.Get(query)
+						if err != nil {
+							fmt.Println(err)
+						}
+						defer resp.Body.Close()
+
+						doc, err := goquery.NewDocumentFormatReader(resp.Body)
+						if err != nil {
+							fmt.Println(err)
+						}
+						fmt.Println(doc)
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
