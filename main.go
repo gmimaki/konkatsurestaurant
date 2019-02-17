@@ -6,7 +6,50 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot"
 	"log"
 	"fmt"
+	"database/sql"
+	_ "github.com/lib/pq"
+	"strings"
 )
+
+type Area struct {
+	id int
+	area_name string
+	area_query string
+}
+
+var Db *sql.DB
+func init() {
+	var err error
+	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("接続")
+}
+
+func GetAreaQuery(area_name string) (area Area, err error) {
+	area = Area{}
+	err = Db.QueryRow("SELECT area_query FROM areas WHERE area_name = $1", area_name).Scan(&area.area_query)
+	return
+}
+
+func sanitizeInput(input string) string {
+	input = strings.Replace(input, "駅", "", -1)
+	input = strings.Replace(input, "\n", "", -1)
+	input = strings.Replace(input, "\r", "", -1)
+	input = strings.Replace(input, "\r\n", "", -1)
+	input = strings.Replace(input, "\r\n", "", -1)
+	input = strings.Replace(input, "・", "", -1)
+	input = strings.Replace(input, "/", "", -1)
+	input = strings.Replace(input, "*", "", -1)
+	input = strings.Replace(input, "'", "", -1)
+	input = strings.Replace(input, ";", "", -1)
+	input = strings.Replace(input, "<", "", -1)
+	input = strings.Replace(input, ">", "", -1)
+	input = strings.Replace(input, "=", "", -1)
+	input = strings.TrimSpace(input)
+	return input
+}
 
 func main() {
 	client := &http.Client{}
@@ -18,14 +61,9 @@ func main() {
 	if (err != nil) {
 		log.Fatal(err)
 	}
-	fmt.Println("this is bot")
-	fmt.Println(bot)
 
 	http.HandleFunc("/webhook", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
-		fmt.Println(events)
-		fmt.Println("this is event")
-		fmt.Println(events)
 		if err != nil {
 			fmt.Println(err)
 			if err == linebot.ErrInvalidSignature {
@@ -40,7 +78,9 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					inputText := sanitizeInput(message.Text)
+					//area_query, _ := GetAreaQuery(inputText)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
 					}
 				}
