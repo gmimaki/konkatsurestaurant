@@ -56,6 +56,18 @@
 			"revisionTime": "2019-02-08T07:56:42Z"
 		},
 		{
+			"checksumSHA1": "xxLSo5tKtXc7jGrR70yoEfza8Cw=",
+			"path": "github.com/lib/pq",
+			"revision": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee",
+			"revisionTime": "2018-10-16T16:26:27Z"
+		},
+		{
+			"checksumSHA1": "AU3fA8Sm33Vj9PBoRPSeYfxLRuE=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee",
+			"revisionTime": "2018-10-16T16:26:27Z"
+		},
+		{
 			"checksumSHA1": "PPoXHvdU68KmvUSj/TkEIRdZh60=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "c4086b716a78920587705af23f3f0f40aaec40ed",
