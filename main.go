@@ -109,7 +109,7 @@ func main() {
 							fmt.Println("F")
 							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
-							srg.Find(".image-viewer__view").Each(func(_ int, s *goquery.Selection) {
+							srg.Find(".restaurant__images").Each(func(_ int, s *goquery.Selection) {
 								fmt.Println("G")
 								fmt.Printf("%#v", srg)
 								fmt.Println(srg.Text())
