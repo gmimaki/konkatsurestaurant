@@ -105,12 +105,15 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("E")
+						selection := doc.find(".js-search-result")
+						html, _ := selection.Html()
+						fmt.Println(html)
+						/*
 						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
 							fmt.Println("F")
 							selection := srg.Find(".restaurant__images")
 							html, _ := selection.Html()
 							fmt.Println(html)
-							/*
 							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
 							fmt.Println(html)
@@ -119,8 +122,8 @@ func main() {
 								fmt.Printf("%#v", srg)
 								fmt.Println(srg.Text())
 							})
-							*/
 						})
+						*/
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
