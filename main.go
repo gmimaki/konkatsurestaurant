@@ -86,7 +86,7 @@ func main() {
 
 					} else {
 						fmt.Println("A")
-						query := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&" + area.area_query
+						query := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&purpose_id=3&" + area.area_query
 						fmt.Println(query)
 
 						resp, err := http.Get(query)
@@ -96,7 +96,7 @@ func main() {
 						fmt.Println("B")
 						fmt.Printf("%#v", resp.Body)
 						fmt.Println("C")
-					//	defer resp.Body.Close()
+						defer resp.Body.Close()
 
 						doc, err := goquery.NewDocumentFromReader(resp.Body)
 						fmt.Printf("%#v", doc)
@@ -107,13 +107,19 @@ func main() {
 						fmt.Println("E")
 						doc.Find(".restaurant").Each(func(_ int, srg *goquery.Selection) {
 							fmt.Println("F")
+							selection := srg.Find(".restaurant__images")
+							html, _ := selection.Html()
+							fmt.Println(html)
+							/*
 							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
-							srg.Find(".image-viewer__link").Each(func(_ int, s *goquery.Selection) {
+							fmt.Println(html)
+							srg.Find(".restaurant__images").Each(func(_ int, s *goquery.Selection) {
 								fmt.Println("G")
 								fmt.Printf("%#v", srg)
 								fmt.Println(srg.Text())
 							})
+							*/
 						})
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
