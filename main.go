@@ -105,7 +105,7 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("E")
-						selection := doc.find(".js-search-result")
+						selection := doc.Find(".js-search-result")
 						html, _ := selection.Html()
 						fmt.Println(html)
 						/*
