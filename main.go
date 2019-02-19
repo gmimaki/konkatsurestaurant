@@ -87,7 +87,7 @@ func main() {
 					} else {
 						fmt.Println("A")
 						//query := "https://retty.me/restaurant-search/search-result/?budget_meal_type=2&min_budget=5&max_budget=9&credit_card_use=1&counter_seat=1&purpose_id=3&" + area.area_query
-						query := "https://tokyo-calendar.jp/restaurants_list?area=19&tag=3"
+						query := "https://www.ozmall.co.jp/restaurant/tokyo/chiyoda-city/st22951/"
 						fmt.Println(query)
 
 						resp, err := http.Get(query)
@@ -106,7 +106,7 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("E")
-						doc.Find(".contents-result-item-head-name").Each(func(_ int, srg *goquery.Selection) {
+						doc.Find(".ozDinIchiTit").Each(func(_ int, srg *goquery.Selection) {
 							fmt.Println("F")
 							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
