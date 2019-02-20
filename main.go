@@ -74,14 +74,12 @@ func main() {
 			}
 			return
 		}
-		fmt.Println("SUCCESSS")
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
 					inputText := sanitizeInput(message.Text)
 					area, _ := GetAreaQuery(inputText)
-					fmt.Println(area.area_query)
 					if len(area.area_query) == 0 {
 
 					} else {
@@ -92,27 +90,21 @@ func main() {
 						if err != nil {
 							fmt.Println(err)
 						}
-						fmt.Println("B")
-						fmt.Printf("%#v", resp.Body)
-						fmt.Println("C")
 						defer resp.Body.Close()
 
 						doc, err := goquery.NewDocumentFromReader(resp.Body)
-						fmt.Printf("%#v", doc)
-						fmt.Println("D")
 						if err != nil {
 							fmt.Println(err)
 						}
-						fmt.Println("E")
 						doc.Find(".ozDinIchiTit").Each(func(_ int, srg *goquery.Selection) {
-							fmt.Println("F")
-							fmt.Printf("%#v", srg)
 							fmt.Println(srg.Text())
 						})
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
 					}
+					fmt.Printf("%#v", linebot.NewTextMessage(inputText))
+					fmt.Println(linebot.NewTextMessage(inputText))
 				}
 			}
 			if event.Type == linebot.EventTypeFollow {
