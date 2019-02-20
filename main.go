@@ -18,6 +18,15 @@ type Area struct {
 	area_query string
 }
 
+type Restaurant struct {
+	name string
+	url string
+	description string
+	image_url string
+}
+
+type Restaurants []Restaurant
+
 var Db *sql.DB
 func init() {
 	var err error
@@ -96,9 +105,28 @@ func main() {
 						if err != nil {
 							fmt.Println(err)
 						}
-						doc.Find(".ozDinIchiTit").Each(func(_ int, srg *goquery.Selection) {
-							fmt.Println(srg.Text())
+
+						var restaurants Restaurants
+						doc.Find(".ozDinIchiWrp").Each(func(_ int, ozWrap *goquery.Selection) {
+							restaurant := Restaurant{}
+							nameElm := ozWrap.Find(".ozDinIchiTit")
+							restaurant.name = nameElm.Text()
+							url, _ := ozWrap.Find(".ozDinIchiTit > h3 > a").Attr("href")
+							restaurant.url = url
+							description, _ := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjInf > p").Attr("href")
+							restaurant.description = description
+							images := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjImg > a")
+							images.Each(func(index int, image *goquery.Selection) {
+								if index == 0 {
+									imageElm := image.Find("img")
+									image_url, _ := imageElm.Attr("src")
+									restaurant.image_url = image_url
+								}
+							})
+
+							restaurants = append(restaurants, restaurant)
 						})
+						fmt.Printf("%#v", restaurants)
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 						log.Print(err)
