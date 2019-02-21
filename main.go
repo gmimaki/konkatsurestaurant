@@ -10,6 +10,8 @@ import (
 	_ "github.com/lib/pq"
 	"strings"
 	"github.com/PuerkitoBio/goquery"
+	"time"
+	"math/rand"
 )
 
 type Area struct {
@@ -109,10 +111,12 @@ func main() {
 						var restaurants Restaurants
 						doc.Find(".ozDinIchiWrp").Each(func(_ int, ozWrap *goquery.Selection) {
 							restaurant := Restaurant{}
-							nameElm := ozWrap.Find(".ozDinIchiTit")
-							restaurant.name = nameElm.Text()
-							url, _ := ozWrap.Find(".ozDinIchiTit > h3 > a").Attr("href")
+
+							titleElm := ozWrap.Find(".ozDinIchiTit > h3 > a")
+							restaurant.name = titleElm.Text()
+							url, _ := titleElm.Attr("href")
 							restaurant.url = url
+
 							description, _ := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjInf > p").Attr("href")
 							restaurant.description = description
 							images := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjImg > a")
@@ -126,6 +130,20 @@ func main() {
 
 							restaurants = append(restaurants, restaurant)
 						})
+
+						displayNum := 3
+						var displayRestaurants Restaurants
+						if len(restaurants) > displayNum {
+							// ランダムに並び変えてから頭3つをとる
+							/*
+							restaurantNum := len(restaurants)
+							for i := 0; i < displayNum; i++ {
+
+							}
+							*/
+						} else {
+							finalRestaurants := copy(displayRestaurants, restaurants)
+						}
 						fmt.Printf("%#v", restaurants)
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
