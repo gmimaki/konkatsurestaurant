@@ -141,6 +141,7 @@ func main() {
 							*/
 						} else {
 							finalRestaurants := copy(displayRestaurants, restaurants)
+							fmt.Printf("%#v", finalRestaurants)
 						}
 						fmt.Printf("%#v", restaurants)
 					}
