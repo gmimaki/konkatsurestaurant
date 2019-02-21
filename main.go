@@ -90,7 +90,10 @@ func main() {
 					inputText := sanitizeInput(message.Text)
 					area, _ := GetAreaQuery(inputText)
 					if len(area.area_query) == 0 {
-
+						message := "エリアが見つかりませんでした...😂\n別の名称やエリア名を入れてみてください😅"
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
+							log.Print(err)
+						}
 					} else {
 						query := "https://www.ozmall.co.jp/restaurant/tokyo/" + area.area_query
 						fmt.Println(query)
@@ -144,12 +147,12 @@ func main() {
 							fmt.Printf("%#v", finalRestaurants)
 						}
 						fmt.Printf("%#v", restaurants)
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
+							log.Print(err)
+						}
+						fmt.Printf("%#v", linebot.NewTextMessage(inputText))
+						fmt.Println(linebot.NewTextMessage(inputText))
 					}
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
-						log.Print(err)
-					}
-					fmt.Printf("%#v", linebot.NewTextMessage(inputText))
-					fmt.Println(linebot.NewTextMessage(inputText))
 				}
 			}
 			if event.Type == linebot.EventTypeFollow {
