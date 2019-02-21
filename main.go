@@ -10,8 +10,6 @@ import (
 	_ "github.com/lib/pq"
 	"strings"
 	"github.com/PuerkitoBio/goquery"
-	"time"
-	"math/rand"
 )
 
 type Area struct {
