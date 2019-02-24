@@ -10,6 +10,7 @@ import (
 	_ "github.com/lib/pq"
 	"strings"
 	"github.com/PuerkitoBio/goquery"
+	"math/rand"
 )
 
 type Area struct {
@@ -133,18 +134,17 @@ func main() {
 						})
 
 						displayNum := 3
-						var displayRestaurants Restaurants
 						if len(restaurants) > displayNum {
 							// ランダムに並び変えてから頭3つをとる
-							/*
-							restaurantNum := len(restaurants)
-							for i := 0; i < displayNum; i++ {
-
+							n := len(restaurants)
+							// Fisher-Yates shuffle
+							for i := n - 1; i >= 0; i-- {
+								j := rand.Intn(i + 1)
+								restaurants[i], restaurants[j] = restaurants[j], restaurants[i]
 							}
-							*/
-						} else {
-							finalRestaurants := copy(displayRestaurants, restaurants)
-							fmt.Printf("%#v", finalRestaurants)
+							restaurants = restaurants[0:displayNum]
+						} else if len(restaurants) == 0 {
+							// 0件のとき
 						}
 						fmt.Printf("%#v", restaurants)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
@@ -156,8 +156,8 @@ func main() {
 				}
 			}
 			if event.Type == linebot.EventTypeFollow {
-				text := "こんにちは、婚活で使えるお店を提案するBotです\n東京都のエリアを入力すると、そのエリアで婚活に使えそうなお店を提案します"
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text)).Do(); err != nil {
+				message := "こんにちは、デートや女子会、婚活などで使えるお店を提案するBotです✨\n東京都のエリアを入力すると、そのエリアでいい感じのお店を提案します！"
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
 					log.Print(err)
 				}
 			}
