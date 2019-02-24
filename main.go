@@ -95,6 +95,7 @@ func main() {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
 							log.Print(err)
 						}
+						return
 					} else {
 						query := "https://www.ozmall.co.jp/restaurant/tokyo/" + area.area_query
 						fmt.Println(query)
@@ -145,6 +146,11 @@ func main() {
 							restaurants = restaurants[0:displayNum]
 						} else if len(restaurants) == 0 {
 							// 0件のとき
+							message := inputText + "でいい感じのお店は見つかりませんでした😂\nエリアの変更を検討しましょう😅"
+							if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
+								log.Print(err)
+							}
+							return
 						}
 						fmt.Printf("%#v", restaurants)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
