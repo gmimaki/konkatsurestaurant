@@ -120,9 +120,9 @@ func main() {
 							url, _ := titleElm.Attr("href")
 							restaurant.url = url
 
-							description, _ := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjInf > p").Attr("href")
+							description := ozWrap.Find(".ozDinIchiObjInf > p").Text()
 							restaurant.description = description
-							images := ozWrap.Find(".ozDinIchiTit > .ozDinIchiObj > .ozDinIchiObjImg > a")
+							images := ozWrap.Find(".ozDinIchiObjImg > a")
 							images.Each(func(index int, image *goquery.Selection) {
 								if index == 0 {
 									imageElm := image.Find("img")
