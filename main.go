@@ -145,6 +145,27 @@ func main() {
 								restaurants[i], restaurants[j] = restaurants[j], restaurants[i]
 							}
 							restaurants = restaurants[0:displayNum]
+
+							template := linebot.NewCarouselTemplate(
+								linebot.NewCarouselColumn(
+									restaurants[0].image_url, restaurants[0].name, restaurants[0].description,
+									linebot.NewURIAction("詳しく見る", restaurants[0].url),
+								),
+								linebot.NewCarouselColumn(
+									restaurants[1].image_url, restaurants[1].name, restaurants[1].description,
+									linebot.NewURIAction("詳しく見る", restaurants[1].url),
+								),
+								linebot.NewCarouselColumn(
+									restaurants[2].image_url, restaurants[2].name, restaurants[2].description,
+									linebot.NewURIAction("詳しく見る", restaurants[2].url),
+								),
+							)
+							if _, err := bot.ReplyMessage(
+								event.ReplyToken,
+								linebot.NewTemplateMessage(inputText + "のいい感じのお店が見つかりました！😊", template),
+							).Do(); err != nil {
+								log.Print(err)
+							}
 						} else if len(restaurants) == 0 {
 							// 0件のとき
 							message := inputText + "でいい感じのお店は見つかりませんでした😂\nエリアの変更を検討しましょう😅"
@@ -152,27 +173,37 @@ func main() {
 								log.Print(err)
 							}
 							return
+						} else if len(restaurants) == 1 {
+							template := linebot.NewCarouselTemplate(
+								linebot.NewCarouselColumn(
+									restaurants[0].image_url, restaurants[0].name, restaurants[0].description,
+									linebot.NewURIAction("詳しく見る", restaurants[0].url),
+								),
+							)
+							if _, err := bot.ReplyMessage(
+								event.ReplyToken,
+								linebot.NewTemplateMessage(inputText + "のいい感じのお店が見つかりました！😊", template),
+							).Do(); err != nil {
+								log.Print(err)
+							}
+						} else if len(restaurants) == 2 {
+							template := linebot.NewCarouselTemplate(
+								linebot.NewCarouselColumn(
+									restaurants[0].image_url, restaurants[0].name, restaurants[0].description,
+									linebot.NewURIAction("詳しく見る", restaurants[0].url),
+								),
+								linebot.NewCarouselColumn(
+									restaurants[1].image_url, restaurants[1].name, restaurants[1].description,
+									linebot.NewURIAction("詳しく見る", restaurants[1].url),
+								),
+							)
+							if _, err := bot.ReplyMessage(
+								event.ReplyToken,
+								linebot.NewTemplateMessage(inputText + "のいい感じのお店が見つかりました！😊", template),
+							).Do(); err != nil {
+								log.Print(err)
+							}
 						}
-						fmt.Printf("%#v", restaurants)
-						template := linebot.NewCarouselTemplate(
-							linebot.NewCarouselColumn(
-								restaurants[0].image_url, restaurants[0].name, restaurants[0].description,
-								linebot.NewURIAction("詳しく見る", restaurants[0].url),
-							),
-						)
-						if _, err := bot.ReplyMessage(
-							event.ReplyToken,
-							linebot.NewTemplateMessage(inputText + "のいい感じのお店が見つかりました！😊", template),
-						).Do(); err != nil {
-							log.Print(err)
-						}
-
-						/*
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
-							log.Print(err)
-						}
-						*/
-						fmt.Printf("%#v", linebot.NewTextMessage(inputText))
 					}
 				}
 			}
