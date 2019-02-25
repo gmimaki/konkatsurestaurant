@@ -215,7 +215,7 @@ func main() {
 				}
 			}
 			if event.Type == linebot.EventTypeFollow {
-				message := "こんにちは、デートや女子会、婚活などで使えるお店を提案するBotです✨\n東京都のエリアを入力すると、そのエリアでいい感じのお店を提案します！"
+				message := "こんにちは、デートや女子会、婚活などで使えるお店を提案するTOKYO IKANJINOMISE BOTです✨\n東京都のエリアを入力すると、そのエリアでいい感じのお店を提案します！"
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
 					log.Print(err)
 				}
