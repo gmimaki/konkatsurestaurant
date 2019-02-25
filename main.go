@@ -162,7 +162,7 @@ func main() {
 						)
 						if _, err := bot.ReplyMessage(
 							event.ReplyToken,
-							linebot.NewTemplateMessage("Carousel alt text", template),
+							linebot.NewTemplateMessage(inputText + "のいい感じのお店が見つかりました！😊", template),
 						).Do(); err != nil {
 							log.Print(err)
 						}
