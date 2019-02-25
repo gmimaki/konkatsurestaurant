@@ -155,9 +155,8 @@ func main() {
 						fmt.Printf("%#v", restaurants)
 						template := linebot.NewCarouselTemplate(
 							linebot.NewCarouselColumn(
-								restaurants[0].image_url, "hoge", "fuga",
-								linebot.NewURIAction("Go to line.me", "https://line.me"),
-								linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
+								restaurants[0].image_url, restaurants[0].name, restaurants[0].description,
+								linebot.NewURIAction("詳しく見る", restaurants[0].url),
 							),
 						)
 						if _, err := bot.ReplyMessage(
