@@ -127,7 +127,7 @@ func main() {
 								if index == 0 {
 									imageElm := image.Find("img")
 									image_url, _ := imageElm.Attr("src")
-									restaurant.image_url = image_url
+									restaurant.image_url = "https://www.ozmall.co.jp" + image_url
 								}
 							})
 
