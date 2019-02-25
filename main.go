@@ -11,6 +11,7 @@ import (
 	"strings"
 	"github.com/PuerkitoBio/goquery"
 	"math/rand"
+	"unicoe/utf8"
 )
 
 type Area struct {
@@ -116,12 +117,18 @@ func main() {
 							restaurant := Restaurant{}
 
 							titleElm := ozWrap.Find(".ozDinIchiTit > h3 > a")
-							restaurant.name = string([]rune(titleElm.Text())[:40])
+							if utf8.RuneCountInString(titleElm.Text()) > 40 {
+								restaurant.name = string([]rune(titleElm.Text())[:40])
+							} else {
+								restaurant.name = titleElm.Text()
+							}
 							url, _ := titleElm.Attr("href")
 							restaurant.url = "https://www.ozmall.co.jp" + url
 
 							description := ozWrap.Find(".ozDinIchiObjInf > p").Text()
-							description = string([]rune(description)[:60])
+							if utf8.RuneCountInString(description) > 60 {
+								description = string([]rune(description)[:60])
+							}
 							restaurant.description = description
 							images := ozWrap.Find(".ozDinIchiObjImg > a")
 							images.Each(func(index int, image *goquery.Selection) {
