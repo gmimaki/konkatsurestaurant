@@ -116,7 +116,7 @@ func main() {
 							restaurant := Restaurant{}
 
 							titleElm := ozWrap.Find(".ozDinIchiTit > h3 > a")
-							restaurant.name = titleElm.Text()
+							restaurant.name = string(rune[](titleElm.Text())[:40])
 							url, _ := titleElm.Attr("href")
 							restaurant.url = "https://www.ozmall.co.jp" + url
 
