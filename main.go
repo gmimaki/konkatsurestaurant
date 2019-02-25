@@ -153,11 +153,26 @@ func main() {
 							return
 						}
 						fmt.Printf("%#v", restaurants)
+						template := linebot.NewCarouselTemplate(
+							linebot.NewCarouselColumn(
+								restaurants[0].image_url, "hoge", "fuga",
+								linebot.NewURIAction("Go to line.me", "https://line.me"),
+								linebot.NewPostbackAction("Say hello1", "hello こんにちは", "", ""),
+							),
+						)
+						if _, err := bot.ReplyMessage(
+							event.ReplyToken,
+							linebot.NewTemplateMessage("Carousel alt text", template),
+						).Do(); err != nil {
+							log.Print(err)
+						}
+
+						/*
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(inputText)).Do(); err != nil {
 							log.Print(err)
 						}
+						*/
 						fmt.Printf("%#v", linebot.NewTextMessage(inputText))
-						fmt.Println(linebot.NewTextMessage(inputText))
 					}
 				}
 			}
