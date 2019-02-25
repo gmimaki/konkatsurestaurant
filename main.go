@@ -11,7 +11,7 @@ import (
 	"strings"
 	"github.com/PuerkitoBio/goquery"
 	"math/rand"
-	"unicoe/utf8"
+	"unicode/utf8"
 )
 
 type Area struct {
