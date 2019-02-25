@@ -118,9 +118,10 @@ func main() {
 							titleElm := ozWrap.Find(".ozDinIchiTit > h3 > a")
 							restaurant.name = titleElm.Text()
 							url, _ := titleElm.Attr("href")
-							restaurant.url = url
+							restaurant.url = "https://www.ozmall.co.jp" + url
 
 							description := ozWrap.Find(".ozDinIchiObjInf > p").Text()
+							description = string([]rune(description[:60]))
 							restaurant.description = description
 							images := ozWrap.Find(".ozDinIchiObjImg > a")
 							images.Each(func(index int, image *goquery.Selection) {
