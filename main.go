@@ -143,7 +143,7 @@ func main() {
 						})
 
 						displayNum := 3
-						if len(restaurants) > displayNum {
+						if len(restaurants) >= displayNum {
 							// ランダムに並び変えてから頭3つをとる
 							n := len(restaurants)
 							// Fisher-Yates shuffle
@@ -215,7 +215,7 @@ func main() {
 				}
 			}
 			if event.Type == linebot.EventTypeFollow {
-				message := "こんにちは、デートや女子会、婚活などで使えるお店を提案するTOKYO IKANJINOMISE BOTです✨\n東京都のエリアを入力すると、そのエリアでいい感じのお店を提案します！"
+				message := "こんにちは、デートや女子会、婚活などで使えるお店を提案するTOKYO IKANJINOMISE BOTです✨\n東京都のエリア名や駅名を入力すると、そのエリアでいい感じのお店を提案します！"
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
 					log.Print(err)
 				}
